@@ -1,0 +1,25 @@
+.NavigationContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 24px;
+  margin-right: 24px;
+  font-size: 18px;
+}
+
+.NavigationItems {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  list-style-type: none;
+}
+
+.NavigationItems :hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.NavigationItems :active {
+  text-decoration: underline;
+  cursor: pointer;
+}

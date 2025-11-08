@@ -1,0 +1,32 @@
+.footerContainer {
+  display: grid;
+  grid-template-columns: 50vw 25vw 25vw;
+  gap: 16px;
+  margin-top: 8px;
+  margin-left: 24px;
+  margin-right: 24px;
+  margin-bottom: 200px;
+}
+
+.columnOne,
+.columnTwo,
+.columnThree {
+  display: flex;
+  flex-direction: column;
+}
+
+.columnOne p {
+  margin: 0;
+}
+
+.columnTwo ul,
+.columnThree ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.columnTwo ul li,
+.columnThree ul li {
+  margin-top: 4px; /* spacing between list items */
+}

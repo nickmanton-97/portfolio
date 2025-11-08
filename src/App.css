@@ -1,0 +1,48 @@
+/* Global HTML/body settings */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Giest", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+:root {
+  background-color: #F4F3F0;
+  color: #272624;
+}
+
+/* Headings and paragraphs */
+h1, h2, h3, h4, h5, p, ul, li {
+  font-weight: 400; /* preserve existing weight */
+  font-family: "Giest", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Specific heading sizes */
+h1 {
+  font-size: 46px;
+  line-height: 1.15;
+}
+
+h3 {
+  font-size: 32px;
+  line-height: 1.5;
+}
+
+h4 {
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+/* Lists */
+ul {
+  color: #888888;
+  font-size: 14px;
+}
+
+li {
+  color: #272624;
+  font-size: 18px;
+  text-decoration: underline;
+  padding-top: 8px;
+}

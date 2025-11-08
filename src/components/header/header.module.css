@@ -1,0 +1,12 @@
+.heroContainer {
+  display: flex;
+  margin: auto;
+  text-align: center;
+  width: 50vw;
+  margin-top: 140px;
+  margin-bottom: 240px;
+}
+
+.recentWork {
+  margin: 24px;
+}
