@@ -1,7 +1,7 @@
-/* --- WorkItem / Accordion --- */
-
+/* --- Work Container --- */
 .recentWork {
   margin: 24px;
+  font-size: 20px;
 }
 
 .workFrame {
@@ -12,9 +12,12 @@
 }
 
 .workItem {
+  display: flex;
+  flex-direction: column; /* stack header + body */
   width: 100%;
 }
 
+/* --- Project Header --- */
 .projectHeader {
   cursor: pointer;
 }
@@ -26,13 +29,13 @@
   width: 100%;
   padding: 0 24px;
   box-sizing: border-box;
-  position: relative;        /* needed for mix-blend-mode arrows */
-  z-index: 0;                /* ensure arrows are above background */
+  position: relative;
+  z-index: 0;
 }
 
 .projectHeaderText {
   display: grid;
-  grid-template-columns: 25vw auto;
+  grid-template-columns: minmax(200px, 25vw) auto;
   align-items: center;
   min-width: 0;
   padding: 14px 0;
@@ -46,8 +49,7 @@
   text-overflow: ellipsis;
 }
 
-/* --- Accordion Button / Inverting Arrow --- */
-
+/* --- Accordion Button / Arrow --- */
 .accordionButton {
   display: flex;
   align-items: center;
@@ -56,26 +58,27 @@
   flex: 0 0 auto;
   position: relative;
   margin-right: 24px;
-  mix-blend-mode: difference; /* inverts against parent background */
-  z-index: 1;                  /* must be above background for blending */
+  mix-blend-mode: difference;
+  z-index: 1;
 }
 
 .accordionButton img {
   width: 20px;
   height: 20px;
   display: block;
-  pointer-events: none;       /* optional: prevent accidental hover issues */
+  pointer-events: none;
 }
 
 /* --- Work Body --- */
-
 .workBodyContent {
-  overflow: hidden;
+  overflow: visible; /* allow images to expand */
 }
 
 .workBodyWrapper {
   margin-top: 40px;
-  width: 60vw;
+  margin-bottom: 40px; /* ensures spacing between text/images and next header */
+  width: 65%;
+  max-width: 100%;
   padding: 0 24px;
   box-sizing: border-box;
 }
@@ -83,27 +86,28 @@
 .description {
   margin-bottom: 24px;
   line-height: 1.3;
-  width: 60vw;
+  width: 100%;
 }
 
+/* Tags */
 .tags {
   display: flex;
   list-style: none;
   padding-left: 0;
   gap: 24px;
+  flex-wrap: wrap;
 }
 
 .tags li {
   font-size: 18px;
-  text-decoration: none;
 }
 
 /* --- Carousel --- */
-
 .imageStripContainer {
   position: relative;
   width: 100%;
   margin-top: 40px;
+  margin-bottom: 24px; /* ✅ add extra spacing below images */
   box-sizing: border-box;
 }
 
@@ -121,7 +125,7 @@
 
 .imageFrame {
   flex: 0 0 auto;
-  width: 40vw;
+  width: min(40vw, 600px); /* responsive, capped at 600px */
   aspect-ratio: 1 / 1;
   overflow: hidden;
 }
@@ -133,8 +137,7 @@
   display: block;
 }
 
-/* --- Carousel Arrows --- */
-
+/* Carousel Arrows */
 .carouselArrowLeft,
 .carouselArrowRight {
   position: absolute;
@@ -162,7 +165,6 @@
   height: 20px;
 }
 
-/* Arrow hover slide-in */
 .carouselArrowLeft:hover {
   transform: translate(calc(-8px), -50%);
 }
@@ -175,7 +177,6 @@
 .imageStrip::-webkit-scrollbar {
   display: none;
 }
-
 .imageStrip {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -186,7 +187,7 @@
 /* Tablet: 768px – 1024px */
 @media (max-width: 1024px) {
   .projectHeaderText {
-    grid-template-columns: 30vw auto;
+    grid-template-columns: minmax(150px, 30vw) auto;
     gap: 16px;
   }
 
@@ -203,12 +204,10 @@
   }
 }
 
-
-
 /* Mobile: up to 767px */
 @media (max-width: 767px) {
   .projectHeaderContent {
-    padding: 24 24px;
+    padding: 0 24px;
   }
 
   .projectHeaderText {
@@ -218,7 +217,7 @@
   }
 
   .workBodyWrapper {
-    width: 105%;
+    width: 100%;
     padding: 0 24px;
     margin-top: 24px;
   }
@@ -238,6 +237,22 @@
 
   .tags {
     gap: 12px;
-    flex-wrap: wrap;
+  }
+}
+
+/* Small mobile: ≤480px */
+@media (max-width: 480px) {
+  .imageFrame {
+    width: 90vw;
+  }
+}
+/* Extra spacing on very large screens */
+@media (min-width: 1600px) {
+  .imageStripContainer {
+    margin-bottom: 40px; /* larger spacing on ultra-wide screens */
+  }
+
+  .workBodyWrapper {
+    margin-bottom: 40px; /* also add extra spacing below text/images */
   }
 }

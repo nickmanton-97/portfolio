@@ -27,21 +27,21 @@ function Work() {
 
   return (
     <>
-    <div className={styles.recentWork}>
-      <p>Recent work ↴</p>
-    </div>
-    <div className={styles.workFrame}>
-      {projects.map((project) => (
-        <WorkItem
-          key={project.id}
-          project={project}
-          isOpen={openProjectId === project.id}
-          toggleProject={toggleProject}
-          ref={(el) => (workRefs.current[project.id] = el)}
-        />
-      ))}
-      <Divider start="top 80%" />
-    </div>
+      <div className={styles.recentWork}>
+        <p>Recent work ↴</p>
+      </div>
+      <div className={styles.workFrame}>
+        {projects.map((project) => (
+          <WorkItem
+            key={project.id}
+            project={project}
+            isOpen={openProjectId === project.id}
+            toggleProject={toggleProject}
+            ref={(el) => (workRefs.current[project.id] = el)}
+          />
+        ))}
+        <Divider start="top 80%" />
+      </div>
     </>
   );
 }
