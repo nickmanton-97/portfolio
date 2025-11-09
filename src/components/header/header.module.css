@@ -4,7 +4,7 @@
   left: 50%;       /* horizontal center */
   transform: translate(-50%, -50%);
   width: 780px;
-  max-width: calc(100% - 48px);
+  /* max-width: calc(100%); */
   z-index: 2;      /* above the grid blocks */
   text-align: center;
   pointer-events: none;
@@ -20,8 +20,8 @@
 /* Tablet */
 @media (max-width: 1024px) {
   .heroContainer {
-    width: 600px;
-    max-width: calc(100% - 48px);
+    width: 650px;
+    max-width: calc(100% - 28px);
   }
   .heroText {
     font-size: 40px;
@@ -31,7 +31,7 @@
 /* Mobile */
 @media (max-width: 768px) {
   .heroContainer {
-    width: 100%;
+    width: 85%;
     max-width: calc(100% - 14px);
   }
   .heroText {

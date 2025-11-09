@@ -51,27 +51,37 @@
   color: white;
 }
 
-/* Mobile tweaks */
 @media (max-width: 768px) {
+  /* Keep logo + hamburger in a row at top */
   .NavigationContainer {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; /* vertically center logo */
+    position: relative;
   }
 
+  /* Hamburger nav and items container */
   .NavRight {
-    flex-direction: column;
-    align-items: flex-start;
+    display: flex;
+    flex-direction: column-reverse; /* hamburger first, items below */
+    align-items: flex-end;
+    position: absolute; /* take out of normal flow */
+    top: 0;
+    right: 0;
     gap: 12px;
-    margin-top: 12px;
   }
 
+  /* Navigation items stacked below hamburger */
   .NavigationItems {
     flex-direction: column;
     gap: 12px;
-    margin-top: 0;
+    align-items: flex-end;
+    margin-top: 18px;  /* move items slightly higher */
+    margin-right: 24px; /* shift items slightly left */
   }
 
+  /* Hamburger in top-right corner */
   .openmenu {
-    margin-top: 0;
+    margin: 0;
   }
 }

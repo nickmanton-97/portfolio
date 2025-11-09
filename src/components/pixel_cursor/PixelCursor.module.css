@@ -5,21 +5,26 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  /* background-color: white; */
   overflow: hidden;
 }
 
 .body {
-  /* font-size: 6vw; */
   text-align: center;
-  /* font-weight: 700; */
   width: 70%;
-  position: relative;
   z-index: 1;
   pointer-events: none;
-  /* text-transform: uppercase; */
   mix-blend-mode: difference;
   color: white;
+}
+
+.scrollMouse {
+  position: absolute;
+  top: calc(50% + 280px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30; /* 👈 keep above everything */
+  pointer-events: none;
+  mix-blend-mode: normal; /* 👈 disable blend mode */
 }
 
 .grid {
@@ -29,8 +34,8 @@
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1; /* add this line */
 }
-
 .column {
   width: 5vw;
 }

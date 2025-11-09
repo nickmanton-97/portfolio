@@ -27,7 +27,7 @@ function Work() {
 
   return (
     <>
-      <div className={styles.recentWork}>
+      <div className={styles.recentWork} id='work'>
         <p>Recent work</p>
       </div>
       <div className={styles.workFrame}>

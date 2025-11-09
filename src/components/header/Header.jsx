@@ -39,12 +39,14 @@ function Header() {
   }, []);
 
   return (
+    <>
     <div className={styles.heroContainer}>
       <h1 className={styles.heroText} ref={heroRef}>
         I’m a designer and front-end developer building digital experiences,
         from concept to code.
       </h1>
     </div>
+    </>
   );
 }
 

@@ -1,9 +1,16 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import styles from "./navigation.module.css";
 import Hamburger from "./Hamburger";
 
-const navItems = ["Work", "About", "Contact"];
+gsap.registerPlugin(ScrollToPlugin);
+
+const navItems = [
+  { label: "Work", href: "#work" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "mailto:mantonnick@outlook.com" },
+];
 
 function Navigation() {
   const navRef = useRef(null);
@@ -30,7 +37,11 @@ function Navigation() {
     const burger = document.getElementById("burger");
 
     timeline.current = gsap.timeline({ paused: true, reversed: true });
-    timeline.current.to(navItemsRef.current, {
+
+    // Animate nav items in reverse order (Contact → About → Work)
+    const reversedItems = [...navItemsRef.current].reverse();
+
+    timeline.current.to(reversedItems, {
       opacity: 1,
       x: 0,
       stagger: 0.1,
@@ -46,6 +57,25 @@ function Navigation() {
     return () => burger.removeEventListener("click", handleClick);
   }, []);
 
+  // Handle nav item clicks (smooth scroll or mailto)
+  const handleNavClick = (href) => (e) => {
+    e.preventDefault();
+
+    if (href.startsWith("#")) {
+      const target = document.querySelector(href);
+      if (target) {
+        // Scroll with offset for fixed header (adjust 80 if needed)
+        gsap.to(window, {
+          scrollTo: target.offsetTop - 80,
+          duration: 0.8,
+          ease: "power2.out",
+        });
+      }
+    } else if (href.startsWith("mailto:")) {
+      window.location.href = href;
+    }
+  };
+
   return (
     <div className={styles.NavigationWrapper} ref={navRef}>
       <nav className={styles.NavigationContainer}>
@@ -55,13 +85,19 @@ function Navigation() {
         {/* Right-side container for nav items + hamburger */}
         <div className={styles.NavRight}>
           <ul className={styles.NavigationItems}>
-            {navItems.map((label, i) => (
+            {navItems.map((item, i) => (
               <li
-                key={label}
+                key={item.label}
                 className={styles.item}
                 ref={(el) => (navItemsRef.current[i] = el)}
               >
-                {label}
+                <a
+                  href={item.href}
+                  onClick={handleNavClick(item.href)}
+                  style={{ color: "inherit", textDecoration: "none" }}
+                >
+                  {item.label}
+                </a>
               </li>
             ))}
           </ul>
