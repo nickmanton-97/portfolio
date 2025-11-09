@@ -4,3 +4,17 @@
   margin-bottom: 160px;
   width: 50vw;
 }
+
+/* Tablet (≤1024px) */
+@media (max-width: 1024px) {
+  .aboutContainer {
+    width: 75vw;
+  }
+}
+
+/* Mobile (≤768px) */
+@media (max-width: 768px) {
+  .aboutContainer {
+    width: 90vw;
+  }
+}

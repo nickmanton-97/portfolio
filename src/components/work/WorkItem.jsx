@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useEffect } from "react";
+import { forwardRef, useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import styles from "./workitem.module.css";
 import Divider from "../misc/divider/Divider";
@@ -6,6 +6,8 @@ import Divider from "../misc/divider/Divider";
 const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
   const contentRef = useRef(null);
   const carouselRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   // Accordion slide animation
   useEffect(() => {
@@ -19,18 +21,26 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
         { height: el.scrollHeight, opacity: 1, duration: 0.6, ease: "power2.in" }
       );
     } else {
-      gsap.to(el, { height: 0, opacity: 1, duration: 0.4, ease: "power2.out" });
+      gsap.to(el, { height: 0, opacity: 0, duration: 0.4, ease: "power2.out" });
     }
   }, [isOpen]);
 
-  // Scroll carousel by one image width
+  // Update arrow states
+  const updateArrowState = () => {
+    if (!carouselRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
+  };
+
+  // Scroll carousel by one image width + gap
   const scrollCarousel = (direction) => {
     if (!carouselRef.current) return;
 
     const firstImage = carouselRef.current.querySelector(`.${styles.imageFrame}`);
     if (!firstImage) return;
 
-    const gap = 14; // gap between images in px
+    const gap = 24;
     const scrollAmount = firstImage.offsetWidth + gap;
 
     carouselRef.current.scrollBy({
@@ -38,6 +48,21 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
       behavior: "smooth",
     });
   };
+
+  // Track scroll to update arrow opacity
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    updateArrowState();
+    carousel.addEventListener("scroll", updateArrowState);
+    window.addEventListener("resize", updateArrowState);
+
+    return () => {
+      carousel.removeEventListener("scroll", updateArrowState);
+      window.removeEventListener("resize", updateArrowState);
+    };
+  }, []);
 
   return (
     <div className={styles.workItem} ref={ref}>
@@ -50,7 +75,10 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
             <h3 className={styles.projectTitle}>{project.clientName}</h3>
             <p className={styles.services}>{project.services}</p>
           </div>
-          <div className={styles.accordionButton}>
+          <div
+            className={styles.accordionButton}
+            style={{ mixBlendMode: "color-dodge" }} // Invert effect
+          >
             <img
               id="open"
               src="open.svg"
@@ -83,25 +111,31 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
         </div>
 
         {/* Image Carousel */}
-        <div className={styles.imageStripContainer} style={{ position: "relative" }}>
-          <button
-            className={styles.carouselArrowLeft}
-            onClick={() => scrollCarousel("left")}
-          >
-            <img src="/arrow_left.svg" alt="Previous" />
-          </button>
-
+        <div className={styles.imageStripContainer}>
           <div className={styles.imageStrip} ref={carouselRef}>
             {project.images.map((image, i) => (
               <div key={i} className={styles.imageFrame}>
-                <img src={image} alt={`${project.clientName} image ${i + 1}`} loading="lazy" />
+                <img
+                  src={image}
+                  alt={`${project.clientName} image ${i + 1}`}
+                  loading="lazy"
+                />
               </div>
             ))}
           </div>
 
+          {/* Carousel Arrows */}
+          <button
+            className={styles.carouselArrowLeft}
+            onClick={() => scrollCarousel("left")}
+            style={{ opacity: canScrollLeft ? 1 : 0.3 }}
+          >
+            <img src="/arrow_left.svg" alt="Previous" />
+          </button>
           <button
             className={styles.carouselArrowRight}
             onClick={() => scrollCarousel("right")}
+            style={{ opacity: canScrollRight ? 1 : 0.3 }}
           >
             <img src="/arrow_right.svg" alt="Next" />
           </button>
