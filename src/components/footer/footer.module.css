@@ -54,3 +54,7 @@
     padding-top: 8px; /* more space between list items on mobile */
   }
 }
+
+a {
+  color: #272624;
+}

@@ -3,8 +3,8 @@
   top: calc(100vh - 60px - 45px); /* 40px above bottom of viewport, minus its own height */
   left: 50%; /* horizontally center */
   transform: translateX(-50%);
-  width: 25px;
-  height: 45px;
+  width: 20px;
+  height: 40px;
   border: 1.5px solid #272624;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.1);
