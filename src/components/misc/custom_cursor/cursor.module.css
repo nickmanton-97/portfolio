@@ -1,0 +1,17 @@
+html {
+  transform: none;
+  zoom: 1;
+}
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 0%;
+  background-color: #272624;
+  pointer-events: none; /* ensures it doesn't block clicks */
+  z-index: 9999;
+  transform: translate(0, 0);
+}

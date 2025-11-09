@@ -17,7 +17,6 @@ function Footer() {
            <div className={styles.columnThree}>
           <ul>Contact
             <li>mantonnick@outlook.com</li>
-            <li>GitHub</li>
             </ul>
         </div>
       </div>

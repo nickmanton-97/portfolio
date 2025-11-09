@@ -3,7 +3,7 @@
   top: 50%;        /* vertical center */
   left: 50%;       /* horizontal center */
   transform: translate(-50%, -50%);
-  width: 760px;
+  width: 780px;
   max-width: calc(100% - 48px);
   z-index: 2;      /* above the grid blocks */
   text-align: center;
@@ -32,7 +32,7 @@
 @media (max-width: 768px) {
   .heroContainer {
     width: 100%;
-    max-width: calc(100% - 24px);
+    max-width: calc(100% - 14px);
   }
   .heroText {
     font-size: 32px;

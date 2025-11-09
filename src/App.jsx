@@ -6,6 +6,7 @@ import About from "./components/about/About";
 import Footer from "./components/footer/Footer";
 import PixelCursor from "./components/pixel_cursor/PixelCursor";
 import Loader from "./components/pixel_loader/PixelLoader";
+import Cursor from "./components/misc/custom_cursor/Cursor";
 import Lenis from "@studio-freight/lenis";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
   return (
     <>
       <Loader />
+      {/* <Cursor /> */}
       <Navigation />
       <PixelCursor />
       <Work />

@@ -28,7 +28,7 @@ function Work() {
   return (
     <>
       <div className={styles.recentWork}>
-        <p>Recent work ↴</p>
+        <p>Recent work</p>
       </div>
       <div className={styles.workFrame}>
         {projects.map((project) => (
