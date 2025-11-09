@@ -6,18 +6,24 @@
   background: transparent;
 
   /* Blending effect */
-  mix-blend-mode: difference; /* inverts colors behind it */
-  color: white; /* starting text/logo color */
+  mix-blend-mode: difference;
+  color: white;
   pointer-events: auto;
 }
 
 .NavigationContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Logo left, nav+hamburger right */
   align-items: center;
   margin: 24px;
   font-size: 18px;
   font-family: 'YourCustomFont', sans-serif;
+}
+
+.NavRight {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* space between nav items and hamburger */
 }
 
 .NavigationItems {
@@ -33,17 +39,39 @@
   cursor: pointer;
   display: inline-block;
   position: relative;
-  height: 1em; /* matches line height */
-  mix-blend-mode: difference; /* apply individually for better control */
-  color: white; /* starting text/logo color */
+  height: 1em;
+  mix-blend-mode: difference;
+  color: white;
+}
+
+/* Hamburger styles */
+.openmenu {
+  cursor: pointer;
+  mix-blend-mode: difference;
+  color: white;
 }
 
 /* Mobile tweaks */
 @media (max-width: 768px) {
   .NavigationContainer {
-    font-size: 16px;
+    flex-direction: column;
+    align-items: flex-start;
   }
+
+  .NavRight {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
   .NavigationItems {
-    gap: 14px;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 0;
+  }
+
+  .openmenu {
+    margin-top: 0;
   }
 }

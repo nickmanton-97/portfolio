@@ -1,0 +1,19 @@
+.openmenu {
+  margin: 0 20px;
+  cursor: pointer;
+  display: block;
+  z-index: 101; /* above nav background if needed */
+
+  /* Inherit nav blend effect */
+  mix-blend-mode: difference;
+  color: white; /* starting color */
+}
+
+/* Make SVG paths/line use currentColor */
+.top,
+.mid,
+.bot {
+  stroke: currentColor;
+  fill: currentColor;
+  transition: all 0.2s ease;
+}
