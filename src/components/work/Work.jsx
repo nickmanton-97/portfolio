@@ -19,13 +19,17 @@ function Work() {
       );
       if (headerEl) {
         const headerTop = headerEl.getBoundingClientRect().top + window.scrollY;
-        const scrollTarget = headerTop - 20;
+        const scrollTarget = headerTop - 80;
         window.scrollTo({ top: scrollTarget, behavior: "smooth" });
       }
     }
   };
 
   return (
+    <>
+    <div className={styles.recentWork}>
+      <p>Recent work ↴</p>
+    </div>
     <div className={styles.workFrame}>
       {projects.map((project) => (
         <WorkItem
@@ -38,6 +42,7 @@ function Work() {
       ))}
       <Divider start="top 80%" />
     </div>
+    </>
   );
 }
 

@@ -1,0 +1,24 @@
+.pixelBackground {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001; /* make sure it's on top */
+}
+
+.row {
+  display: flex;
+  flex: 1; /* each row fills equally */
+}
+
+.block {
+  width: 10vh; /* square blocks */
+  height: 100%;
+  background-color: #272624;
+  opacity: 0; /* hidden by default */
+}

@@ -12,6 +12,11 @@
   color: #272624;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 /* Headings and paragraphs */
 h1, h2, h3, h4, h5, p, ul, li {
   font-weight: 400; /* preserve existing weight */
@@ -43,7 +48,7 @@ ul {
 li {
   color: #272624;
   font-size: 18px;
-  text-decoration: underline;
+  /* text-decoration: underline; */
   padding-top: 8px;
 }
 

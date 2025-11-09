@@ -1,5 +1,9 @@
 /* --- WorkItem / Accordion --- */
 
+.recentWork {
+  margin: 24px;
+}
+
 .workFrame {
   display: flex;
   flex-direction: column;
@@ -187,7 +191,7 @@
   }
 
   .workBodyWrapper {
-    width: 70vw;
+    width: 80vw;
   }
 
   .imageFrame {
@@ -195,25 +199,27 @@
   }
 
   .description {
-    width: 70vw;
+    width: 80vw;
   }
 }
+
+
 
 /* Mobile: up to 767px */
 @media (max-width: 767px) {
   .projectHeaderContent {
-    padding: 0 16px;
+    padding: 24 24px;
   }
 
   .projectHeaderText {
     grid-template-columns: 40vw auto;
     gap: 12px;
-    padding: 10px 0;
+    padding: 24px 0;
   }
 
   .workBodyWrapper {
-    width: 90%;
-    padding: 0 16px;
+    width: 105%;
+    padding: 0 24px;
     margin-top: 24px;
   }
 
@@ -226,12 +232,12 @@
   }
 
   .imageStrip {
-    padding-left: 16px;
+    padding-left: 24px;
     padding-right: 16px;
   }
 
   .tags {
-    gap: 16px;
+    gap: 12px;
     flex-wrap: wrap;
   }
 }

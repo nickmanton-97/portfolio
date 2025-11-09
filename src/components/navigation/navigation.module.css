@@ -1,39 +1,49 @@
+.NavigationWrapper {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background: transparent;
+
+  /* Blending effect */
+  mix-blend-mode: difference; /* inverts colors behind it */
+  color: white; /* starting text/logo color */
+  pointer-events: auto;
+}
+
 .NavigationContainer {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  margin-left: 24px;
-  margin-right: 24px;
-  font-size: 18px;
   align-items: center;
+  margin: 24px;
+  font-size: 18px;
+  font-family: 'YourCustomFont', sans-serif;
 }
 
 .NavigationItems {
   display: flex;
-  flex-direction: row;
-  gap: 40px;
-  list-style-type: none;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
   align-items: center;
-  padding-bottom: 8px;
 }
 
-.NavigationItems :hover {
-  text-decoration: underline;
+/* Nav items and logo */
+.item {
   cursor: pointer;
+  display: inline-block;
+  position: relative;
+  height: 1em; /* matches line height */
+  mix-blend-mode: difference; /* apply individually for better control */
+  color: white; /* starting text/logo color */
 }
 
-.NavigationItems :active {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-/* ↓ Mobile */
+/* Mobile tweaks */
 @media (max-width: 768px) {
   .NavigationContainer {
     font-size: 16px;
   }
   .NavigationItems {
-    font-size: 16px;
     gap: 14px;
   }
 }
