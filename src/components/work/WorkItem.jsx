@@ -8,6 +8,15 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
   const carouselRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const videoObserverRef = useRef(null);
+
+  // Helper: convert possible "public/..." paths to root-relative paths
+  const normaliseSrc = (src) => {
+    if (!src) return src;
+    if (src.startsWith("http") || src.startsWith("/")) return src;
+    if (src.startsWith("public/")) return `/${src.replace(/^public\//, "")}`;
+    return src;
+  };
 
   // Accordion slide animation
   useEffect(() => {
@@ -64,6 +73,77 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
     };
   }, []);
 
+  // Lazy-load / autoplay videos when they come into view
+  useEffect(() => {
+    if (!carouselRef.current) return;
+
+    // Clean up previous observer
+    if (videoObserverRef.current) {
+      videoObserverRef.current.disconnect();
+      videoObserverRef.current = null;
+    }
+
+    const videos = carouselRef.current.querySelectorAll("video[data-src]");
+
+    if (videos.length === 0) return;
+
+    const options = {
+      root: carouselRef.current,
+      rootMargin: "0px",
+      threshold: 0.35, // start loading when ~35% visible
+    };
+
+    const onIntersect = (entries) => {
+      entries.forEach((entry) => {
+        const vid = entry.target;
+        if (entry.isIntersecting) {
+          // set src only once
+          if (!vid.getAttribute("src")) {
+            const dataSrc = vid.dataset.src;
+            if (dataSrc) {
+              vid.src = dataSrc;
+              // optional: load metadata first then play
+              vid.load();
+              // try to play; muted is required for autoplay in many browsers
+              const p = vid.play();
+              if (p && p.catch) {
+                p.catch(() => {
+                  /* play blocked; ignore */
+                });
+              }
+            }
+          } else {
+            // if src already set, ensure it's playing
+            if (vid.paused) {
+              vid.play().catch(() => {});
+            }
+          }
+        } else {
+          // optionally pause when out of view to reduce CPU/bandwidth
+          if (!vid.paused) {
+            try {
+              vid.pause();
+            } catch (e) {
+              /* ignore */
+            }
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(onIntersect, options);
+    videoObserverRef.current = observer;
+
+    videos.forEach((v) => observer.observe(v));
+
+    return () => {
+      if (videoObserverRef.current) {
+        videoObserverRef.current.disconnect();
+        videoObserverRef.current = null;
+      }
+    };
+  }, [isOpen, project.images]); // re-run when open toggles or images change
+
   return (
     <div className={styles.workItem} ref={ref}>
       <Divider start="top 80%" />
@@ -113,15 +193,30 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
         {/* Image Carousel */}
         <div className={styles.imageStripContainer}>
           <div className={styles.imageStrip} ref={carouselRef}>
-            {project.images.map((image, i) => (
-              <div key={i} className={styles.imageFrame}>
-                <img
-                  src={image}
-                  alt={`${project.clientName} image ${i + 1}`}
-                  loading="lazy"
-                />
-              </div>
-            ))}
+            {project.images.map((image, i) => {
+              const src = normaliseSrc(image);
+              const isVideo =
+                typeof src === "string" &&
+                (src.toLowerCase().endsWith(".mp4") || src.toLowerCase().endsWith(".webm"));
+
+              return (
+                <div key={i} className={styles.imageFrame}>
+                  {isVideo ? (
+                    <video
+                      // data-src used for lazy-loading; observer will set src when visible
+                      data-src={src}
+                      preload="none"
+                      muted
+                      loop
+                      playsInline
+                      // autoplay controlled via IntersectionObserver when src set
+                    />
+                  ) : (
+                    <img src={src} alt={`${project.clientName} image ${i + 1}`} loading="lazy" />
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Carousel Arrows */}

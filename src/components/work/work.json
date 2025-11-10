@@ -12,7 +12,7 @@
         "Motion Graphics"
       ],
       "images": [
-        "public/work/fjall/fjall_01.png",
+        "public/work/fjall/Fjall-Homescreen.mp4",
         "public/work/fjall/fjall_02.png",
         "public/work/fjall/fjall_03.png",
         "public/work/fjall/fjall_04.png"
@@ -66,9 +66,9 @@
         "UX/UI Design"
       ],
       "images": [
-        "public/work/small_time_group/smalltime_01.png",
-        "public/work/small_time_group/smalltime_02.png",
-        "public/work/small_time_group/smalltime_02-1.png"
+        "public/work/small_time_group/smalltime_01.jpg",
+        "public/work/small_time_group/smalltime_02.jpg",
+        "public/work/small_time_group/smalltime_03.jpg"
       ]
     }
   ],

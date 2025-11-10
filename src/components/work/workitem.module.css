@@ -173,6 +173,13 @@
   transform: translate(calc(8px), -50%);
 }
 
+.imageFrame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 /* Hide scrollbars */
 .imageStrip::-webkit-scrollbar {
   display: none;

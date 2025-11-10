@@ -5,7 +5,7 @@ import workData from "./work.json";
 import WorkItem from "./WorkItem";
 
 function Work() {
-  const projects = Object.values(workData).flat(); // flatten once
+  const projects = Object.values(workData).flat();
   const [openProjectId, setOpenProjectId] = useState(null);
   const workRefs = useRef({});
 
@@ -27,19 +27,30 @@ function Work() {
 
   return (
     <>
-      <div className={styles.recentWork} id='work'>
+      <div className={styles.recentWork} id="work">
         <p>Recent work</p>
       </div>
+
       <div className={styles.workFrame}>
         {projects.map((project) => (
           <WorkItem
             key={project.id}
-            project={project}
+            project={{
+              ...project,
+              media: project.images.map((src) => {
+                const isVideo = src.endsWith(".mp4") || src.endsWith(".webm");
+                return {
+                  type: isVideo ? "video" : "image",
+                  src,
+                };
+              }),
+            }}
             isOpen={openProjectId === project.id}
             toggleProject={toggleProject}
             ref={(el) => (workRefs.current[project.id] = el)}
           />
         ))}
+
         <Divider start="top 80%" />
       </div>
     </>
