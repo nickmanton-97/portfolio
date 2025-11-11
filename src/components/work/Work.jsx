@@ -4,6 +4,21 @@ import Divider from "../misc/divider/Divider";
 import workData from "./work.json";
 import WorkItem from "./WorkItem";
 
+function ComingSoonItem({ clientName, services }) {
+  return (
+    <div className={styles.workItem} style={{ opacity: 0.5 }}>
+      <div className={styles.projectHeader}>
+        <div className={styles.projectHeaderContent}>
+          <div className={styles.projectHeaderText}>
+            <h3 className={styles.projectTitle}>{clientName || "Coming Soon"}</h3>
+            {services && <p className={styles.services}>{services}</p>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Work() {
   const projects = Object.values(workData).flat();
   const [openProjectId, setOpenProjectId] = useState(null);
@@ -52,6 +67,17 @@ function Work() {
         ))}
 
         <Divider start="top 80%" />
+
+        {/* Coming Soon Items */}
+        <ComingSoonItem clientName="JAM Architects" services="Development (Coming soon)" />
+
+        {/* Faded divider between coming soon items */}
+        <Divider
+          start="top 80%"
+          style={{ opacity: 0.3, margin: "24px 0" }}
+        />
+
+        <ComingSoonItem clientName="Natalie Daskalou" services="Development (Coming soon)" />
       </div>
     </>
   );

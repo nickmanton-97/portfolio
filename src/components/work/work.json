@@ -4,7 +4,7 @@
       "id": 1,
       "clientName": "Fjall",
       "services": "Branding, UI Design",
-      "description": "Fjall is a cloud architecture tool to deploy infrastructure in under 30 minutes, transforming a once time-intensive process into something effortless. Inspired by the idea of 'working above the cloud', the brand and digital experience embody lightness, clarity, and calm focus - through spacious layouts, soft colours, and Mid Century Modern inspired illustrations that blend nostalgic charm with modern depth and motion to make complex technology feel intuitive and elegant. As Lead Designer on the project.",
+      "description": "Fjall is a cloud architecture tool to deploy infrastructure in under 30 minutes, transforming a once time-intensive process into something effortless. Inspired by the idea of 'working above the cloud', the brand and digital experience embody lightness, clarity, and calm focus - through spacious layouts, soft colours, and Mid Century Modern inspired illustrations that blend nostalgic charm with modern depth and motion to make complex technology feel intuitive and elegant. As Lead Designer on the project. Designed at Brands to life.",
       "tags": [
         "Brand Identity",
         "UX/UI Design",
@@ -12,10 +12,10 @@
         "Motion Graphics"
       ],
       "images": [
-        "public/work/fjall/Fjall-Homescreen.mp4",
-        "public/work/fjall/fjall_02.png",
-        "public/work/fjall/fjall_03.png",
-        "public/work/fjall/fjall_04.png"
+        "/work/fjall/Fjall-Homescreen.mp4",
+        "/work/fjall/Fjall-Lock.mp4",
+        "/work/fjall/Fjall-Cards.mp4",
+        "/work/fjall/fjall_04.jpg"
       ]
     }
   ],
@@ -24,7 +24,7 @@
       "id": 2,
       "clientName": "Rip Curl",
       "services": "Graphic Design",
-      "description": "Aurora is a digital platform for immersive experiences. The project focused on crafting a clean, intuitive interface that reflects the brand’s modern identity, while animations and motion elements enhance user engagement. Lead Designer on all branding and UI/UX design aspects.",
+      "description": "I worked full-time on Rip Curl’s men’s design team for three years, producing illustration and design assets for product and marketing. The role involved extensive research into industry trends, as well as close collaboration with the sales and product management team to align designs with commercial strategy.",
       "tags": [
         "Graphic Design"
       ],
@@ -40,14 +40,35 @@
       ]
     }
   ],
-    "Project 03": [
+  "Project 03": [
     {
       "id": 3,
+      "clientName": "Barbra",
+      "services": "Branding, UI/UX, Motion",
+      "description": "Barbra is Australia’s only LGBTQIA+ finance brokerage, bringing bold, joyful energy to a space traditionally seen as corporate and stuffy. Inspired by drag culture, the identity is bold, bright, and unapologetically loving. Rounded corners, expressive illustrations, and playful motion bring personality to every touchpoint, turning finance into a space that’s safe, vibrant, and full of energy. Designed at Brands to life.",
+      "tags": [
+        "Brand Identity",
+        "UX/UI Design",
+        "Motion Graphics",
+        "Illustration"
+      ],
+      "images": [
+        "public/work/barbra/Barbra-Running.mp4",
+        "public/work/barbra/barbra_01.png",
+        "public/work/barbra/Barbra-Socials.mp4",
+        "public/work/barbra/barbra_01-4.png",
+        "public/work/barbra/barbra_01-2.png"
+      ]
+    }
+  ],
+  "Project 04": [
+    {
+      "id": 4,
       "clientName": "The Hidden Sea",
       "services": "UI Design",
-      "description": "Fjall is a cloud architecture tool to deploy infrastructure in under 30 minutes, transforming a once time-intensive process into something effortless. Inspired by the idea of 'working above the cloud', the brand and digital experience embody lightness, clarity, and calm focus - through spacious layouts, soft colours, and Mid Century Modern inspired illustrations that blend nostalgic charm with modern depth and motion to make complex technology feel intuitive and elegant. As Lead Designer on the project.",
+      "description": "Unofficial design exploration for The Hidden Sea, a wine brand funding ocean clean-up with every bottle sold. I created updated UI comps to soften the branding and streamline the site’s layout, presenting a cleaner, more cohesive user experience.",
       "tags": [
-        "UX/UI Design"
+        "UI Design"
       ],
       "images": [
         "public/work/the_hidden_sea/thehiddensea_01.png",
@@ -56,14 +77,14 @@
       ]
     }
   ],
-  "Project 04": [
+  "Project 05": [
     {
-      "id": 4,
+      "id": 5,
       "clientName": "Small Time Group",
       "services": "UI Design",
-      "description": "Aurora is a digital platform for immersive experiences. The project focused on crafting a clean, intuitive interface that reflects the brand’s modern identity, while animations and motion elements enhance user engagement. Lead Designer on all branding and UI/UX design aspects.",
+      "description": "Where emerging artists go to refine their product, develop a plan, and make meaningful connections in the industry. I designed the website to bring everything together into a cohesive digital presence that reflects their mission to help committed musicians gain clarity and momentum in their careers. Designed at Rock Agency.",
       "tags": [
-        "UX/UI Design"
+        "UI Design"
       ],
       "images": [
         "public/work/small_time_group/smalltime_01.jpg",
@@ -72,17 +93,14 @@
       ]
     }
   ],
-  "Project 05": [
+  "Project 06": [
     {
-      "id": 5,
+      "id": 6,
       "clientName": "SaCSA",
       "services": "Graphic Design",
-      "description": "Fjall is a cloud architecture tool to deploy infrastructure in under 30 minutes, transforming a once time-intensive process into something effortless. Inspired by the idea of 'working above the cloud', the brand and digital experience embody lightness, clarity, and calm focus - through spacious layouts, soft colours, and Mid Century Modern inspired illustrations that blend nostalgic charm with modern depth and motion to make complex technology feel intuitive and elegant. As Lead Designer on the project.",
+      "description": "I designed the full reports for the Creative Workforce Scoping Study, a landmark project delivered by Creative Australia and Service and Creative Skills Australia (SaCSA). The study explores long-standing workforce issues in the creative sector. I established the overall design system, and applied it to the full report ensuring clarity, accessibility, and visual impact for a wide-ranging readership. Designed at Brands to life.",
       "tags": [
-        "Brand Identity",
-        "UX/UI Design",
-        "Illustration",
-        "Motion Graphics"
+        "Print/Publication"
       ],
       "images": [
         "public/work/sacsa/sacsa_01.png",
@@ -90,27 +108,5 @@
         "public/work/sacsa/sacsa_03.png"
       ]
     }
-  ],
-  "Project 06": [
-    {
-      "id": 6,
-      "clientName": "Barbra",
-      "services": "Branding, UI/UX, Motion",
-      "description": "Aurora is a digital platform for immersive experiences. The project focused on crafting a clean, intuitive interface that reflects the brand’s modern identity, while animations and motion elements enhance user engagement. Lead Designer on all branding and UI/UX design aspects.",
-      "tags": [
-        "Brand Identity",
-        "UX/UI Design",
-        "Motion Graphics",
-        "Illustration"
-      ],
-      "images": [
-        "public/work/barbra/barbra_01.png",
-        "public/work/barbra/barbra_01-1.png",
-        "public/work/barbra/barbra_01-2.png",
-        "public/work/barbra/barbra_01-3.png",
-        "public/work/barbra/barbra_01-4.png"
-      ]
-    }
   ]
-
 }

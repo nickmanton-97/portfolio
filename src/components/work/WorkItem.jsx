@@ -8,15 +8,6 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
   const carouselRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
-  const videoObserverRef = useRef(null);
-
-  // Helper: convert possible "public/..." paths to root-relative paths
-  const normaliseSrc = (src) => {
-    if (!src) return src;
-    if (src.startsWith("http") || src.startsWith("/")) return src;
-    if (src.startsWith("public/")) return `/${src.replace(/^public\//, "")}`;
-    return src;
-  };
 
   // Accordion slide animation
   useEffect(() => {
@@ -46,17 +37,59 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
   const scrollCarousel = (direction) => {
     if (!carouselRef.current) return;
 
-    const firstImage = carouselRef.current.querySelector(`.${styles.imageFrame}`);
-    if (!firstImage) return;
+    const firstFrame = carouselRef.current.querySelector(`.${styles.imageFrame}`);
+    if (!firstFrame) return;
 
     const gap = 24;
-    const scrollAmount = firstImage.offsetWidth + gap;
+    const scrollAmount = firstFrame.offsetWidth + gap;
 
     carouselRef.current.scrollBy({
       left: direction === "right" ? scrollAmount : -scrollAmount,
       behavior: "smooth",
     });
   };
+
+  // Dragging logic
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeftStart = 0;
+
+    const onMouseDown = (e) => {
+      isDragging = true;
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeftStart = carousel.scrollLeft;
+      carousel.classList.add(styles.dragging);
+    };
+
+    const onMouseMove = (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = x - startX;
+      carousel.scrollLeft = scrollLeftStart - walk;
+    };
+
+    const onMouseUpOrLeave = () => {
+      isDragging = false;
+      carousel.classList.remove(styles.dragging);
+    };
+
+    carousel.addEventListener("mousedown", onMouseDown);
+    carousel.addEventListener("mousemove", onMouseMove);
+    carousel.addEventListener("mouseleave", onMouseUpOrLeave);
+    carousel.addEventListener("mouseup", onMouseUpOrLeave);
+
+    return () => {
+      carousel.removeEventListener("mousedown", onMouseDown);
+      carousel.removeEventListener("mousemove", onMouseMove);
+      carousel.removeEventListener("mouseleave", onMouseUpOrLeave);
+      carousel.removeEventListener("mouseup", onMouseUpOrLeave);
+    };
+  }, []);
 
   // Track scroll to update arrow opacity
   useEffect(() => {
@@ -73,77 +106,6 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
     };
   }, []);
 
-  // Lazy-load / autoplay videos when they come into view
-  useEffect(() => {
-    if (!carouselRef.current) return;
-
-    // Clean up previous observer
-    if (videoObserverRef.current) {
-      videoObserverRef.current.disconnect();
-      videoObserverRef.current = null;
-    }
-
-    const videos = carouselRef.current.querySelectorAll("video[data-src]");
-
-    if (videos.length === 0) return;
-
-    const options = {
-      root: carouselRef.current,
-      rootMargin: "0px",
-      threshold: 0.35, // start loading when ~35% visible
-    };
-
-    const onIntersect = (entries) => {
-      entries.forEach((entry) => {
-        const vid = entry.target;
-        if (entry.isIntersecting) {
-          // set src only once
-          if (!vid.getAttribute("src")) {
-            const dataSrc = vid.dataset.src;
-            if (dataSrc) {
-              vid.src = dataSrc;
-              // optional: load metadata first then play
-              vid.load();
-              // try to play; muted is required for autoplay in many browsers
-              const p = vid.play();
-              if (p && p.catch) {
-                p.catch(() => {
-                  /* play blocked; ignore */
-                });
-              }
-            }
-          } else {
-            // if src already set, ensure it's playing
-            if (vid.paused) {
-              vid.play().catch(() => {});
-            }
-          }
-        } else {
-          // optionally pause when out of view to reduce CPU/bandwidth
-          if (!vid.paused) {
-            try {
-              vid.pause();
-            } catch (e) {
-              /* ignore */
-            }
-          }
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(onIntersect, options);
-    videoObserverRef.current = observer;
-
-    videos.forEach((v) => observer.observe(v));
-
-    return () => {
-      if (videoObserverRef.current) {
-        videoObserverRef.current.disconnect();
-        videoObserverRef.current = null;
-      }
-    };
-  }, [isOpen, project.images]); // re-run when open toggles or images change
-
   return (
     <div className={styles.workItem} ref={ref}>
       <Divider start="top 80%" />
@@ -155,19 +117,16 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
             <h3 className={styles.projectTitle}>{project.clientName}</h3>
             <p className={styles.services}>{project.services}</p>
           </div>
-          <div
-            className={styles.accordionButton}
-            style={{ mixBlendMode: "color-dodge" }} // Invert effect
-          >
+          <div className={styles.accordionButton} style={{ mixBlendMode: "color-dodge" }}>
             <img
               id="open"
-              src="open.svg"
+              src="/open.svg"
               alt="Open"
               style={{ display: isOpen ? "none" : "block" }}
             />
             <img
               id="close"
-              src="close.svg"
+              src="/close.svg"
               alt="Close"
               style={{ display: isOpen ? "block" : "none" }}
             />
@@ -190,33 +149,32 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
           </ul>
         </div>
 
-        {/* Image Carousel */}
+        {/* Image/Video Carousel */}
         <div className={styles.imageStripContainer}>
           <div className={styles.imageStrip} ref={carouselRef}>
-            {project.images.map((image, i) => {
-              const src = normaliseSrc(image);
-              const isVideo =
-                typeof src === "string" &&
-                (src.toLowerCase().endsWith(".mp4") || src.toLowerCase().endsWith(".webm"));
-
-              return (
+            {isOpen &&
+              project.images.map((media, i) => (
                 <div key={i} className={styles.imageFrame}>
-                  {isVideo ? (
+                  {media.endsWith(".mp4") ? (
                     <video
-                      // data-src used for lazy-loading; observer will set src when visible
-                      data-src={src}
-                      preload="none"
+                      src={media.startsWith("/") ? media : `/${media}`}
                       muted
                       loop
+                      autoPlay
                       playsInline
-                      // autoplay controlled via IntersectionObserver when src set
+                      preload="auto"
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   ) : (
-                    <img src={src} alt={`${project.clientName} image ${i + 1}`} loading="lazy" />
+                    <img
+                      src={media.startsWith("/") ? media : `/${media}`}
+                      alt={`${project.clientName} ${i + 1}`}
+                      loading="lazy"
+                      onDragStart={(e) => e.preventDefault()} // prevent dragging images
+                    />
                   )}
                 </div>
-              );
-            })}
+              ))}
           </div>
 
           {/* Carousel Arrows */}
