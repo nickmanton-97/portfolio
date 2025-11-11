@@ -17,7 +17,7 @@
   align-items: center;
   margin: 24px;
   font-size: 18px;
-  font-family: 'YourCustomFont', sans-serif;
+  font-family: "Almanera Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
 .NavRight {
@@ -77,7 +77,7 @@
     gap: 12px;
     align-items: flex-end;
     margin-top: 18px;  /* move items slightly higher */
-    margin-right: 24px; /* shift items slightly left */
+    margin-right: 14px; /* shift items slightly left */
   }
 
   /* Hamburger in top-right corner */

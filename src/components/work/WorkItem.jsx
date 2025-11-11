@@ -1,5 +1,4 @@
 import { forwardRef, useRef, useEffect, useState } from "react";
-import { gsap } from "gsap";
 import styles from "./workitem.module.css";
 import Divider from "../misc/divider/Divider";
 
@@ -9,36 +8,23 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // Accordion slide animation
+  if (!project) return null; // Safety check
+
+  // Accordion visibility (no height calculation, no animation)
   useEffect(() => {
     const el = contentRef.current;
     if (!el) return;
 
     if (isOpen) {
-      gsap.fromTo(
-        el,
-        { height: 0, opacity: 0 },
-        {
-          height: el.scrollHeight,
-          opacity: 1,
-          duration: 0.6,
-          ease: "power2.in",
-          onComplete: () => {
-            el.style.height = "auto"; // prevents jumping
-          },
-        }
-      );
+      el.style.display = "block";
+      el.style.opacity = "1";
     } else {
-      gsap.to(el, {
-        height: 0,
-        opacity: 0,
-        duration: 0.4,
-        ease: "power2.out",
-      });
+      el.style.display = "none";
+      el.style.opacity = "0";
     }
   }, [isOpen]);
 
-  // Update arrow states
+  // Update carousel arrow states
   const updateArrowState = () => {
     if (!carouselRef.current) return;
     const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
@@ -49,7 +35,6 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
   // Scroll carousel by one image width + gap
   const scrollCarousel = (direction) => {
     if (!carouselRef.current) return;
-
     const firstFrame = carouselRef.current.querySelector(`.${styles.imageFrame}`);
     if (!firstFrame) return;
 
@@ -127,7 +112,7 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
       <div
         className={styles.projectHeader}
         onClick={(e) => {
-          e.preventDefault(); // prevents accidental mailto links
+          e.preventDefault();
           toggleProject(project.id);
         }}
       >
@@ -157,7 +142,7 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
       <div
         className={styles.workBodyContent}
         ref={contentRef}
-        style={{ height: 0, opacity: 0, overflow: "hidden" }}
+        style={{ display: "none", opacity: 0, overflow: "hidden" }}
       >
         <div className={styles.workBodyWrapper}>
           <h4 className={styles.description}>{project.description}</h4>
@@ -171,30 +156,28 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
         {/* Image/Video Carousel */}
         <div className={styles.imageStripContainer}>
           <div className={styles.imageStrip} ref={carouselRef}>
-            {isOpen &&
-              project.images.map((media, i) => (
-                <div key={i} className={styles.imageFrame}>
-                  {media.endsWith(".mp4") ? (
-                    <video
-                      src={media.startsWith("/") ? media : `/${media}`}
-                      muted
-                      loop
-                      autoPlay
-                      playsInline
-                      preload="auto"
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  ) : (
-                    <img
-                      src={media.startsWith("/") ? media : `/${media}`}
-                      alt={`${project.clientName} ${i + 1}`}
-                      loading="lazy"
-                      onDragStart={(e) => e.preventDefault()}
-                      style={{ width: "100%", display: "block" }}
-                    />
-                  )}
-                </div>
-              ))}
+            {project.images.map((media, i) => (
+              <div key={i} className={styles.imageFrame}>
+                {media.endsWith(".mp4") ? (
+                  <video
+                    src={media}
+                    muted
+                    loop
+                    autoPlay
+                    playsInline
+                    preload="auto"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                ) : (
+                  <img
+                    src={media}
+                    alt={`${project.clientName} ${i + 1}`}
+                    onDragStart={(e) => e.preventDefault()}
+                    style={{ width: "100%", display: "block" }}
+                  />
+                )}
+              </div>
+            ))}
           </div>
 
           {/* Carousel Arrows */}

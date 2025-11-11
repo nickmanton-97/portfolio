@@ -28,7 +28,7 @@ export default function PixelCursor() {
   };
 
   const colorize = (el) => {
-    el.style.backgroundColor = 'black';
+    el.style.backgroundColor = '#272624';
     setTimeout(() => {
       el.style.backgroundColor = 'transparent';
     }, 300);

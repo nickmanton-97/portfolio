@@ -27,17 +27,7 @@ function Work() {
   const toggleProject = (id) => {
     const newOpenId = openProjectId === id ? null : id;
     setOpenProjectId(newOpenId);
-
-    if (newOpenId && workRefs.current[newOpenId]) {
-      const headerEl = workRefs.current[newOpenId].querySelector(
-        `.${styles.projectHeader}`
-      );
-      if (headerEl) {
-        const headerTop = headerEl.getBoundingClientRect().top + window.scrollY;
-        const scrollTarget = headerTop - 80;
-        window.scrollTo({ top: scrollTarget, behavior: "smooth" });
-      }
-    }
+    // Removed scroll-to-header logic
   };
 
   return (
@@ -52,7 +42,7 @@ function Work() {
             key={project.id}
             project={{
               ...project,
-              media: project.images.map((src) => {
+              media: (project.images || []).map((src) => {
                 const isVideo = src.endsWith(".mp4") || src.endsWith(".webm");
                 return {
                   type: isVideo ? "video" : "image",
