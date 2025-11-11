@@ -85,3 +85,7 @@
     margin: 0;
   }
 }
+/* Disable clicks when nav is closed */
+.navClosed {
+  pointer-events: none;
+}

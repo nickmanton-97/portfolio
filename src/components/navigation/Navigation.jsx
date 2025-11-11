@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import styles from "./navigation.module.css";
@@ -16,6 +16,7 @@ function Navigation() {
   const navRef = useRef(null);
   const navItemsRef = useRef([]);
   const timeline = useRef(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Animate nav into place on page load
   useEffect(() => {
@@ -35,8 +36,14 @@ function Navigation() {
   // Hamburger click triggers staggered nav items
   useEffect(() => {
     const burger = document.getElementById("burger");
+    if (!burger) return;
 
-    timeline.current = gsap.timeline({ paused: true, reversed: true });
+    timeline.current = gsap.timeline({
+      paused: true,
+      reversed: true,
+      onReverseComplete: () => setIsMenuOpen(false),
+      onStart: () => setIsMenuOpen(true),
+    });
 
     // Animate nav items in reverse order (Contact → About → Work)
     const reversedItems = [...navItemsRef.current].reverse();
@@ -50,7 +57,13 @@ function Navigation() {
     });
 
     const handleClick = () => {
-      timeline.current.reversed() ? timeline.current.restart() : timeline.current.reverse();
+      if (timeline.current.reversed()) {
+        timeline.current.play();
+        setIsMenuOpen(true);
+      } else {
+        timeline.current.reverse();
+        setIsMenuOpen(false);
+      }
     };
 
     burger.addEventListener("click", handleClick);
@@ -64,7 +77,6 @@ function Navigation() {
     if (href.startsWith("#")) {
       const target = document.querySelector(href);
       if (target) {
-        // Scroll with offset for fixed header (adjust 80 if needed)
         gsap.to(window, {
           scrollTo: target.offsetTop - 80,
           duration: 0.8,
@@ -74,17 +86,25 @@ function Navigation() {
     } else if (href.startsWith("mailto:")) {
       window.location.href = href;
     }
+
+    // Close menu after navigation (for mobile)
+    if (!timeline.current.reversed()) {
+      timeline.current.reverse();
+      setIsMenuOpen(false);
+    }
   };
 
   return (
     <div className={styles.NavigationWrapper} ref={navRef}>
       <nav className={styles.NavigationContainer}>
-        {/* Logo / Wordmark */}
         <div className={styles.Logo}>Nick Manton</div>
 
-        {/* Right-side container for nav items + hamburger */}
         <div className={styles.NavRight}>
-          <ul className={styles.NavigationItems}>
+          <ul
+            className={`${styles.NavigationItems} ${
+              !isMenuOpen ? styles.navClosed : ""
+            }`}
+          >
             {navItems.map((item, i) => (
               <li
                 key={item.label}

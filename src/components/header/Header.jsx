@@ -42,7 +42,7 @@ function Header() {
     <>
     <div className={styles.heroContainer}>
       <h1 className={styles.heroText} ref={heroRef}>
-        I’m a Designer and Front-End developer building digital experiences,
+        I’m a Designer and Front-End Developer building digital experiences,
         from concept to code.
       </h1>
     </div>

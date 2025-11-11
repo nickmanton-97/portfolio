@@ -2,6 +2,7 @@ import { forwardRef, useRef, useEffect, useState } from "react";
 import styles from "./workitem.module.css";
 import Divider from "../misc/divider/Divider";
 
+
 const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
   const contentRef = useRef(null);
   const carouselRef = useRef(null);
