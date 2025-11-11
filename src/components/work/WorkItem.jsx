@@ -18,10 +18,23 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
       gsap.fromTo(
         el,
         { height: 0, opacity: 0 },
-        { height: el.scrollHeight, opacity: 1, duration: 0.6, ease: "power2.in" }
+        {
+          height: el.scrollHeight,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.in",
+          onComplete: () => {
+            el.style.height = "auto"; // prevents jumping
+          },
+        }
       );
     } else {
-      gsap.to(el, { height: 0, opacity: 0, duration: 0.4, ease: "power2.out" });
+      gsap.to(el, {
+        height: 0,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.out",
+      });
     }
   }, [isOpen]);
 
@@ -111,7 +124,13 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
       <Divider start="top 80%" />
 
       {/* Header */}
-      <div className={styles.projectHeader} onClick={() => toggleProject(project.id)}>
+      <div
+        className={styles.projectHeader}
+        onClick={(e) => {
+          e.preventDefault(); // prevents accidental mailto links
+          toggleProject(project.id);
+        }}
+      >
         <div className={styles.projectHeaderContent}>
           <div className={styles.projectHeaderText}>
             <h3 className={styles.projectTitle}>{project.clientName}</h3>
@@ -120,13 +139,13 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
           <div className={styles.accordionButton} style={{ mixBlendMode: "color-dodge" }}>
             <img
               id="open"
-              src="/open.svg"
+              src="/portfolio/open.svg"
               alt="Open"
               style={{ display: isOpen ? "none" : "block" }}
             />
             <img
               id="close"
-              src="/close.svg"
+              src="/portfolio/close.svg"
               alt="Close"
               style={{ display: isOpen ? "block" : "none" }}
             />
@@ -170,7 +189,8 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
                       src={media.startsWith("/") ? media : `/${media}`}
                       alt={`${project.clientName} ${i + 1}`}
                       loading="lazy"
-                      onDragStart={(e) => e.preventDefault()} // prevent dragging images
+                      onDragStart={(e) => e.preventDefault()}
+                      style={{ width: "100%", display: "block" }}
                     />
                   )}
                 </div>
@@ -183,14 +203,14 @@ const WorkItem = forwardRef(({ project, isOpen, toggleProject }, ref) => {
             onClick={() => scrollCarousel("left")}
             style={{ opacity: canScrollLeft ? 1 : 0.3 }}
           >
-            <img src="/arrow_left.svg" alt="Previous" />
+            <img src="/portfolio/arrow_left.svg" alt="Previous" />
           </button>
           <button
             className={styles.carouselArrowRight}
             onClick={() => scrollCarousel("right")}
             style={{ opacity: canScrollRight ? 1 : 0.3 }}
           >
-            <img src="/arrow_right.svg" alt="Next" />
+            <img src="/portfolio/arrow_right.svg" alt="Next" />
           </button>
         </div>
       </div>

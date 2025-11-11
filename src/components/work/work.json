@@ -12,10 +12,10 @@
         "Motion Graphics"
       ],
       "images": [
-        "/work/fjall/Fjall-Homescreen.mp4",
-        "/work/fjall/Fjall-Lock.mp4",
-        "/work/fjall/Fjall-Cards.mp4",
-        "/work/fjall/fjall_04.jpg"
+        "/portfolio/work/fjall/Fjall-Homescreen.mp4",
+        "/portfolio/work/fjall/Fjall-Lock.mp4",
+        "/portfolio/work/fjall/Fjall-Cards.mp4",
+        "/portfolio/work/fjall/fjall_04.jpg"
       ]
     }
   ],
@@ -29,14 +29,14 @@
         "Graphic Design"
       ],
       "images": [
-        "public/work/ripcurl/ripcurl_01.png",
-        "public/work/ripcurl/ripcurl_02.png",
-        "public/work/ripcurl/ripcurl_03.png",
-        "public/work/ripcurl/ripcurl_04.png",
-        "public/work/ripcurl/ripcurl_05.png",
-        "public/work/ripcurl/ripcurl_06.png",
-        "public/work/ripcurl/ripcurl_07.png",
-        "public/work/ripcurl/ripcurl_07-1.png"
+        "/portfolio/work/ripcurl/ripcurl_01.png",
+        "/portfolio/work/ripcurl/ripcurl_02.png",
+        "/portfolio/work/ripcurl/ripcurl_03.png",
+        "/portfolio/work/ripcurl/ripcurl_04.png",
+        "/portfolio/work/ripcurl/ripcurl_05.png",
+        "/portfolio/work/ripcurl/ripcurl_06.png",
+        "/portfolio/work/ripcurl/ripcurl_07.png",
+        "/portfolio/work/ripcurl/ripcurl_07-1.png"
       ]
     }
   ],
@@ -53,11 +53,12 @@
         "Illustration"
       ],
       "images": [
-        "public/work/barbra/Barbra-Running.mp4",
-        "public/work/barbra/barbra_01.png",
-        "public/work/barbra/Barbra-Socials.mp4",
-        "public/work/barbra/barbra_01-4.png",
-        "public/work/barbra/barbra_01-2.png"
+        "/portfolio/work/barbra/Barbra-Running.mp4",
+        "/portfolio/work/barbra/barbra_01.png",
+        "/portfolio/work/barbra/barbra_01-1.png",
+        "/portfolio/work/barbra/Barbra-Socials.mp4",
+        "/portfolio/work/barbra/barbra_01-4.png",
+        "/portfolio/work/barbra/barbra_01-2.png"
       ]
     }
   ],
@@ -71,9 +72,9 @@
         "UI Design"
       ],
       "images": [
-        "public/work/the_hidden_sea/thehiddensea_01.png",
-        "public/work/the_hidden_sea/thehiddensea_02.png",
-        "public/work/the_hidden_sea/thehiddensea_02-1.png"
+        "/portfolio/work/the_hidden_sea/thehiddensea_01.png",
+        "/portfolio/work/the_hidden_sea/thehiddensea_02.png",
+        "/portfolio/work/the_hidden_sea/thehiddensea_02-1.png"
       ]
     }
   ],
@@ -87,9 +88,9 @@
         "UI Design"
       ],
       "images": [
-        "public/work/small_time_group/smalltime_01.jpg",
-        "public/work/small_time_group/smalltime_02.jpg",
-        "public/work/small_time_group/smalltime_03.jpg"
+        "/portfolio/work/small_time_group/smalltime_01.jpg",
+        "/portfolio/work/small_time_group/smalltime_02.jpg",
+        "/portfolio/work/small_time_group/smalltime_03.jpg"
       ]
     }
   ],
@@ -103,9 +104,9 @@
         "Print/Publication"
       ],
       "images": [
-        "public/work/sacsa/sacsa_01.png",
-        "public/work/sacsa/sacsa_02.png",
-        "public/work/sacsa/sacsa_03.png"
+        "/portfolio/work/sacsa/sacsa_01.png",
+        "/portfolio/work/sacsa/sacsa_02.png",
+        "/portfolio/work/sacsa/sacsa_03.png"
       ]
     }
   ]
