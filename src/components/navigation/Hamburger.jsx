@@ -2,47 +2,62 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import styles from "./hamburger.module.css";
 
-export default function Hamburger() {
+export default function Hamburger({ isOpen = false }) {
   const topRef = useRef(null);
   const midRef = useRef(null);
   const botRef = useRef(null);
-  const timeline = useRef(null);
+  const tlRef = useRef(null);
 
   useEffect(() => {
-    // GSAP timeline matching original TimelineMax
-    timeline.current = gsap.timeline({ paused: true, reversed: true });
+    // build timeline: start = burger (three lines), end = X
+    const tl = gsap.timeline({ paused: true });
 
-    timeline.current
-      // Burg phase (move lines out & shrink middle)
-      .to(topRef.current, { y: -11, transformOrigin: "50% 50%", duration: 0.2 }, "burg")
-      .to(botRef.current, { y: 9, transformOrigin: "50% 50%", duration: 0.2 }, "burg")
-      .to(midRef.current, { scale: 0.01, transformOrigin: "50% 50%", duration: 0.2 }, "burg")
-      // Rotate phase
+    tl.to(topRef.current, { y: -11, duration: 0.18 }, "burg")
+      .to(botRef.current, { y: 9, duration: 0.18 }, "burg")
+      .to(midRef.current, { scale: 0.01, duration: 0.18 }, "burg")
       .addLabel("rotate")
-      .to(topRef.current, { y: 5, duration: 0.2 }, "rotate")
-      .to(botRef.current, { y: -5, duration: 0.2 }, "rotate")
-      .to(topRef.current, { rotation: 45, transformOrigin: "44% 50%", duration: 0.2 }, "rotate")
-      .to(botRef.current, { rotation: -45, transformOrigin: "50% 52%", duration: 0.2 }, "rotate");
+      .to(
+        topRef.current,
+        { y: 5, rotation: 45, transformOrigin: "44% 50%", duration: 0.18 },
+        "rotate"
+      )
+      .to(
+        botRef.current,
+        { y: -5, rotation: -45, transformOrigin: "50% 52%", duration: 0.18 },
+        "rotate"
+      );
 
-    const handleClick = () => {
-      timeline.current.reversed() ? timeline.current.restart() : timeline.current.reverse();
-    };
+    // ensure the timeline starts visually at burger (progress 0)
+    tl.progress(0);
 
-    const burger = document.getElementById("burger");
-    burger.addEventListener("click", handleClick);
+    tlRef.current = tl;
 
     return () => {
-      burger.removeEventListener("click", handleClick);
+      // cleanup if component unmounts
+      if (tlRef.current) tlRef.current.kill();
+      tlRef.current = null;
     };
   }, []);
 
+  // respond to prop change: play -> to X, reverse -> to burger
+  useEffect(() => {
+    const tl = tlRef.current;
+    if (!tl) return;
+
+    if (isOpen) {
+      tl.play();
+    } else {
+      tl.reverse();
+    }
+  }, [isOpen]);
+
   return (
     <svg
-      id="burger"
       className={styles.openmenu}
       width="30"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 30 30"
+      aria-hidden="true"
     >
       <line
         ref={topRef}

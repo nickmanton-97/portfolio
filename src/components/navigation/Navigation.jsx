@@ -15,10 +15,10 @@ const navItems = [
 function Navigation() {
   const navRef = useRef(null);
   const navItemsRef = useRef([]);
-  const timeline = useRef(null);
+  const navTimeline = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Animate nav into place on page load
+  // Initial page entrance and hide nav items
   useEffect(() => {
     gsap.set(navRef.current, { y: -70, opacity: 0 });
     gsap.to(navRef.current, {
@@ -29,48 +29,42 @@ function Navigation() {
       delay: 2,
     });
 
-    // Initialize nav items hidden offscreen for hamburger toggle
     gsap.set(navItemsRef.current, { opacity: 0, x: 50 });
   }, []);
 
-  // Hamburger click triggers staggered nav items
+  // create nav items timeline (start = closed)
   useEffect(() => {
-    const burger = document.getElementById("burger");
-    if (!burger) return;
-
-    timeline.current = gsap.timeline({
-      paused: true,
-      reversed: true,
-      onReverseComplete: () => setIsMenuOpen(false),
-      onStart: () => setIsMenuOpen(true),
-    });
-
-    // Animate nav items in reverse order (Contact → About → Work)
+    navTimeline.current = gsap.timeline({ paused: true });
     const reversedItems = [...navItemsRef.current].reverse();
-
-    timeline.current.to(reversedItems, {
+    navTimeline.current.to(reversedItems, {
       opacity: 1,
       x: 0,
       stagger: 0.1,
       duration: 0.3,
       ease: "power2.out",
     });
-
-    const handleClick = () => {
-      if (timeline.current.reversed()) {
-        timeline.current.play();
-        setIsMenuOpen(true);
-      } else {
-        timeline.current.reverse();
-        setIsMenuOpen(false);
-      }
-    };
-
-    burger.addEventListener("click", handleClick);
-    return () => burger.removeEventListener("click", handleClick);
+    // ensure timeline starts at the closed position (progress 0)
+    navTimeline.current.progress(0);
   }, []);
 
-  // Handle nav item clicks (smooth scroll or mailto)
+  // When burger is clicked, toggle state and timeline
+  const handleBurgerClick = () => {
+    const navTl = navTimeline.current;
+    if (!navTl) {
+      setIsMenuOpen((s) => !s);
+      return;
+    }
+
+    if (!isMenuOpen) {
+      navTl.play();
+      setIsMenuOpen(true);
+    } else {
+      navTl.reverse();
+      setIsMenuOpen(false);
+    }
+  };
+
+  // clicking a nav link: scroll or mailto then close menu
   const handleNavClick = (href) => (e) => {
     e.preventDefault();
 
@@ -87,11 +81,9 @@ function Navigation() {
       window.location.href = href;
     }
 
-    // Close menu after navigation (for mobile)
-    if (!timeline.current.reversed()) {
-      timeline.current.reverse();
-      setIsMenuOpen(false);
-    }
+    // Close menu if open
+    if (navTimeline.current) navTimeline.current.reverse();
+    setIsMenuOpen(false);
   };
 
   return (
@@ -122,7 +114,10 @@ function Navigation() {
             ))}
           </ul>
 
-          <Hamburger />
+          {/* parent handles click; pass isMenuOpen so Hamburger can animate */}
+          <div onClick={handleBurgerClick} style={{ cursor: "pointer" }}>
+            <Hamburger isOpen={isMenuOpen} />
+          </div>
         </div>
       </nav>
     </div>
